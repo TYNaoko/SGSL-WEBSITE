@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SgSL Learning Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="cloud"></div><div class="cloud c2"></div>
+<main>
+
+<section class="view on" id="login">
+  <div class="win">
+    <div class="bar">SgSL Learning Portal <small>v2.0</small></div>
+    <div class="body">
+      <div class="row">
+        <div class="mascot"><svg width="80" height="90" viewBox="0 0 80 90" aria-hidden="true"><ellipse cx="40" cy="55" rx="30" ry="30" fill="#4db2f5" stroke="#14589a" stroke-width="3"/><circle cx="30" cy="48" r="6" fill="#fff"/><circle cx="50" cy="48" r="6" fill="#fff"/><circle cx="31" cy="49" r="3" fill="#17406b"/><circle cx="51" cy="49" r="3" fill="#17406b"/><path d="M28 64q12 12 24 0" fill="none" stroke="#14589a" stroke-width="3" stroke-linecap="round"/><path d="M20 28q6-18 20-12 14-6 20 12" fill="#ffd600" stroke="#c9a400" stroke-width="2"/></svg>Sam the Signer</div>
+        <div class="bubble">Welcome back! Log in to start today’s lesson.</div>
+      </div>
+      <label for="u">Username</label>
+      <input type="text" id="u" value="student123" autocomplete="off">
+      <label for="p">Password</label>
+      <input type="password" id="p" value="password" autocomplete="off">
+      <p style="margin:12px 0"><label style="display:inline;font-weight:normal"><input type="checkbox" checked> Remember me</label> &nbsp; <a class="link" onclick="go('history')">Forgot password?</a></p>
+      <button class="btn" onclick="go('history')">Log in</button>
+      <div class="hint">Any username and password works.</div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="history">
+  <div class="win">
+    <div class="bar">Did you know?! <small>Lesson 0 <button class="out" onclick="go('login')">Log out</button></small></div>
+    <div class="body">
+      <div class="row">
+        <div class="mascot"><svg width="80" height="90" viewBox="0 0 80 90" aria-hidden="true"><ellipse cx="40" cy="55" rx="30" ry="30" fill="#4db2f5" stroke="#14589a" stroke-width="3"/><circle cx="30" cy="48" r="6" fill="#fff"/><circle cx="50" cy="48" r="6" fill="#fff"/><circle cx="31" cy="49" r="3" fill="#17406b"/><circle cx="51" cy="49" r="3" fill="#17406b"/><path d="M28 64q12 12 24 0" fill="none" stroke="#14589a" stroke-width="3" stroke-linecap="round"/><path d="M20 28q6-18 20-12 14-6 20 12" fill="#ffd600" stroke="#c9a400" stroke-width="2"/></svg>Sam the Signer</div>
+        <div class="bubble">Singapore Sign Language (SgSL) developed within Singapore’s 
+          Deaf community and has been shaped by several influences, including Shanghainese Sign Language and American Sign Language.
+          <p></p><em>"Similar to spoken languages, signed languages develop independently based on geographical location and events occurring to the community" -SGSL SignBank </em></p>
+           Today it has its own signs, including ones for Singlish words. 
+           <i>In 2018 SGSL was officially adopted in signing-desiginated schools!</i></div>
+      </div>
+      <p style="margin-top:18px;text-align:center"><button class="btn green" onclick="go('menu')">Start learning!</button></p>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="menu">
+  <div class="win">
+    <div class="bar">Choose a word <small>Level 1 <button class="out" onclick="go('login')">Log out</button></small></div>
+    <div class="body">
+      <b>Progress: <span id="done">0</span>/4 words</b>
+      <div class="prog"><i id="pb"></i></div>
+      <div class="grid">
+        <div class="tile t0" tabindex="0" role="button" data-w="Chope">Chope<div class="stars">☆☆☆</div><span>Click to learn</span></div>
+        <div class="tile t1" tabindex="0" role="button" data-w="Siao">Siao<div class="stars">☆☆☆</div><span>Click to learn</span></div>
+        <div class="tile t2" tabindex="0" role="button" data-w="Kena">Kena<div class="stars">☆☆☆</div><span>Click to learn</span></div>
+        <div class="tile t3" tabindex="0" role="button" data-w="Kiasu">Kiasu<div class="stars">☆☆☆</div><span>Click to learn</span></div>
+      </div>
+      <p style="margin-top:20px;text-align:center"><button class="btn" onclick="go('history')">Back</button></p>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="word">
+  <div class="win">
+    <div class="bar"><span id="wt">Chope</span> <small>Video lesson <button class="out" onclick="go('login')">Log out</button></small></div>
+    <div class="body">
+    <video id="wv" class="video" controls playsinline preload="metadata" loop autoplay muted></video>      
+    <div class="film" id="film"></div>
+      <div class="def"><b id="wd"></b><br><span id="wm"></span></div>
+      <p style="margin-top:18px"><button class="btn green" onclick="go('menu')">Back to menu</button></p>
+    </div>
+  </div>
+</section>
+
+<div class="foot">You are visitor no. <span class="counter">007777</span></div>
+</main>
+<script>
+var D={Chope:["To reserve a seat or spot, usually by leaving a tissue packet on it.","“Can you go chope a table?”"],
+Siao:["Crazy or mad. Can describe a person or a situation.","“wahh eh he's siao!”"],
+Kena:["To be on the receiving end of something, usually unpleasant.","“Bruh I kena scolded by the prof.”"],
+Kiasu:["Afraid to lose out. Always wanting to be first or get the most.","“Why are you so kiasu!”"]};
+var seen={};
+var S={Chope:3,Siao:2,Kena:2,Kiasu:4};
+function go(id){
+  var v=document.getElementById("wv");
+  if(id!=="word"){v.pause();}
+  document.querySelectorAll(".view").forEach(function(x){x.classList.toggle("on",x.id===id)});
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll(".tile").forEach(function(t){
+  function open(){
+    var w=t.dataset.w;
+    document.getElementById("wt").textContent=w;
+    var v=document.getElementById("wv");
+    v.src="videos/"+w.toLowerCase()+".mp4";
+    v.play();
+    var film=document.getElementById("film");
+    film.innerHTML="";
+    for(var i=1;i<=S[w];i++){
+    var img=document.createElement("img");
+      img.src="images/"+w.toLowerCase()+"_"+i+".jpg";
+      img.alt=w+" sign, step "+i+" of "+S[w];
+      film.appendChild(img);
+    }
+    document.getElementById("wd").textContent=w+": "+D[w][0];
+    document.getElementById("wm").textContent=D[w][1];
+    seen[w]=1;
+    t.querySelector(".stars").textContent="★★★";
+    var n=Object.keys(seen).length;
+    document.getElementById("done").textContent=n;
+    document.getElementById("pb").style.width=(n*25)+"%";
+    go("word");
+  }
+  t.addEventListener("click",open);
+  t.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});
+});
+</script>
+</body>
+</html>

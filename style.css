@@ -1,0 +1,473 @@
+
+/* =========================================================
+   1. COLOUR VARIABLES
+   ========================================================= */
+:root {
+  /* Background sky and grass */
+  --sky1: #0a6cff;     
+  --sky2: #5fdcff;      
+  --grass: #3fe000;    
+  --grass2: #1c9e00;    
+
+  /* Main box and text */
+  --panel: #fffbe0;    
+  --ink: #0a2f8f;       
+  --bar1: #1a8cff;     
+  --bar2: #0046d6;     
+  --line: #0046d6;      
+
+  /* Orange button and green button */
+  --o1: #ffc400;       
+  --o2: #ff5200;       
+  --odark: #b02e00;     
+  --g1: #8cff2e;       
+  --g2: #10b800;       
+  --gdark: #087500;     
+
+  /* Other */
+  --note: #ffee33;      
+  --mute: #3a5aa8;      
+
+  /* Layout and phone safe areas */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* =========================================================
+   2. PAGE 
+   ========================================================= */
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+* {
+  box-sizing: border-box;   /* padding doesn't make boxes wider */
+}
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(var(--sky1), var(--sky2) 70%, var(--grass) 70%, var(--grass2));
+  background-attachment: fixed;
+}
+
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 150px 16px 90px;   
+}
+
+.view {
+  display: none;
+}
+.view.on {
+  display: block;
+}
+
+
+/* =========================================================
+   3. BACKGROUND CLOUDS
+   ========================================================= */
+.cloud {
+  position: fixed;
+  width: 140px;
+  height: 44px;
+  background: #fff;
+  border-radius: 44px;
+  opacity: .85;
+  top: 70px;
+  left: 6%;
+  z-index: 0;
+}
+.cloud:before,
+.cloud:after {           
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+.cloud:before {
+  width: 60px;
+  height: 60px;
+  top: -28px;
+  left: 20px;
+}
+.cloud:after {
+  width: 50px;
+  height: 50px;
+  top: -20px;
+  left: 68px;
+}
+.c2 {                     
+  top: 150px;
+  left: auto;
+  right: 8%;
+  transform: scale(.9);
+}
+
+
+/* =========================================================
+   4. THE BOX (WINDOW) AND ITS TITLE BAR
+   ========================================================= */
+.win {                    
+  background: var(--panel);
+  border: 4px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 6px 0 rgba(0,0,0,.18), 0 12px 24px rgba(0,0,0,.2);
+  overflow: hidden;
+}
+
+.bar {                    
+  background: linear-gradient(var(--bar1), var(--bar2));
+  color: #fff;
+  padding: 10px 16px;
+  font: bold 20px "Arial Black", Arial, sans-serif;
+  text-shadow: 0 2px 2px rgba(0,0,0,.35);
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  border-bottom: 3px solid #002b9c;
+}
+.bar small {              
+  font: 12px Verdana, sans-serif;
+  text-shadow: none;
+  opacity: .95;
+}
+
+.body {                 
+  padding: 20px;
+}
+
+
+/* =========================================================
+   5. TEXT, LABELS AND FORM INPUTS
+   ========================================================= */
+h1, h2 {               
+  margin: 0 0 10px;
+  font-family: "Arial Black", Arial, sans-serif;
+}
+h2 {
+  font-size: 22px;
+}
+
+p {
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+label {                   
+  display: block;
+  font-weight: bold;
+  margin: 10px 0 4px;
+}
+
+input[type=text],
+input[type=password] {   
+  width: 100%;
+  padding: 10px 12px;
+  font: 16px Verdana, sans-serif;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: #17406b;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15);
+}
+
+.hint {                  
+  font-size: 12px;
+  color: var(--mute);
+  margin-top: 14px;
+  text-align: center;
+}
+
+.link {                   
+  color: var(--bar2);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   6. BUTTONS
+   ========================================================= */
+.btn {                    /* big glossy orange button */
+  display: inline-block;
+  cursor: pointer;
+  font: bold 17px "Trebuchet MS", Verdana, sans-serif;
+  color: #fff;
+  padding: 11px 26px;
+  border-radius: 12px;
+  background: linear-gradient(var(--o1), var(--o2));
+  border: 1px solid var(--odark);
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  /* highlight on top + solid "thick" edge + soft drop shadow */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 4px 0 var(--odark), 0 7px 10px rgba(0,0,0,.25);
+  transition: filter .1s, transform .1s;
+}
+.btn:hover {             
+  filter: brightness(1.08);
+}
+.btn:active {            
+  transform: translateY(3px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 1px 0 var(--odark);
+}
+
+.btn.green {             
+  background: linear-gradient(var(--g1), var(--g2));
+  border-color: var(--gdark);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 4px 0 var(--gdark), 0 7px 10px rgba(0,0,0,.25);
+}
+.btn.green:active {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 1px 0 var(--gdark);
+}
+
+.out {                   
+  cursor: pointer;
+  margin-left: 10px;
+  font: bold 12px "Trebuchet MS", Verdana, sans-serif;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: linear-gradient(var(--o1), var(--o2));
+  border: 1px solid var(--odark);
+  text-shadow: 0 1px 1px rgba(0,0,0,.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 2px 0 var(--odark);
+}
+.out:hover {
+  filter: brightness(1.08);
+}
+.out:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+
+.btn:focus-visible,
+.tile:focus-visible,
+input:focus-visible,
+.out:focus-visible {
+  outline: 3px solid #ffd600;
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   7. MASCOT AND SPEECH BUBBLE (login + "Did you know?")
+   ========================================================= */
+.row {                    /* mascot on the left, bubble on the right */
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.mascot {
+  flex: 0 0 88px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+.bubble {                 /* white speech bubble */
+  position: relative;
+  background: #fff;
+  color: #17406b;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  flex: 1;
+  line-height: 1.5;
+}
+.bubble:before {          /* the little triangle pointing at the mascot */
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 22px;
+  border: 8px solid transparent;
+  border-right-color: var(--line);
+  border-left: 0;
+}
+
+
+/* =========================================================
+   8. WORD MENU ("Choose a word" page)
+   ========================================================= */
+.prog {                   /* progress bar outline */
+  height: 16px;
+  border-radius: 9px;
+  background: #d5e6f5;
+  border: 2px solid var(--line);
+  overflow: hidden;
+  margin: 6px 0 16px;
+}
+.prog i {                 /* the green fill inside the progress bar */
+  display: block;
+  height: 100%;
+  width: 0;               /* JavaScript changes this as words are learned */
+  background: linear-gradient(#9ee05a, #4caf1f);
+}
+
+.grid {                   /* 2 x 2 layout for the word tiles */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tile {                   /* each word tile */
+  cursor: pointer;
+  border: 3px solid rgba(0,0,0,.25);
+  border-radius: 16px;
+  padding: 18px 10px 14px;
+  text-align: center;
+  color: #fff;
+  font: bold 24px "Arial Black", Arial, sans-serif;
+  text-shadow: 0 2px 2px rgba(0,0,0,.4);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.55), 0 5px 0 rgba(0,0,0,.25);
+  transition: transform .1s;
+}
+.tile:hover {             /* lifts up slightly when hovered */
+  transform: translateY(-2px);
+}
+.tile span {              /* "Click to learn" text */
+  display: block;
+  font: 13px Verdana, sans-serif;
+  margin-top: 6px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+}
+
+/* Tile colours: t0 = Chope, t1 = Siao, t2 = Kena, t3 = Kiasu */
+.t0 { background: linear-gradient(#ff7a3d, #e60026); }
+.t1 { background: linear-gradient(#e24dff, #7a00d6); }
+.t2 { background: linear-gradient(#1ae6ff, #008fe0); }
+.t3 { background: linear-gradient(#a6ff3d, #1fa800); }
+
+.stars {                
+  color: #ffe14d;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-top: 4px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+}
+
+
+/* =========================================================
+   9. WORD PAGE (video, still images, definition)
+   ========================================================= */
+.video {                  /* video placeholder box (16:9) */
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #222, #444);
+  border-radius: 10px;
+  border: 3px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  position: relative;
+}
+.video b {                
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(var(--o1), var(--o2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border: 2px solid #fff;
+  margin-right: 12px;
+}
+
+video.video {
+  display: block;
+  width: 100%;          /* fit the panel width */
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;  /* show the whole frame, never crop */
+  background: #000;
+}
+.film {                   /* dark "film strip" row under the video */
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  background: #222;
+  padding: 8px;
+  border-radius: 8px;
+}
+.film div {               /* each still image placeholder */
+  flex: 1;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #8fb3d1, #c9dff0);
+  border-radius: 3px;
+  font-size: 11px;
+  color: #17406b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.film {
+  justify-content: center;   /* centres the stills when there are only 2 */
+}
+.film img {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 33%;            /* 2 stills don't stretch huge; 4 stills share the row */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;         /* fills each frame; use "contain" to avoid any cropping */
+  border-radius: 3px;
+  background: #8fb3d1;
+}
+.def {                    /* yellow sticky note with the definition */
+  background: var(--note);
+  color: #3d3400;
+  border-radius: 4px;
+  padding: 14px 16px;
+  transform: rotate(-1deg);
+  box-shadow: 3px 4px 0 rgba(0,0,0,.18);
+  line-height: 1.5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .def {
+    color: #fff6c2;
+  }
+}
+
+
+/* =========================================================
+   10. FOOTER (IE9 message and visitor counter)
+   ========================================================= */
+.foot {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+.counter {
+  display: inline-block;
+  background: #000;
+  color: #7dff7d;
+  font-family: "Courier New", monospace;
+  padding: 2px 6px;
+  letter-spacing: 2px;
+  border: 1px inset #888;
+}
+
+
+/* =========================================================
+   11. PHONE / SMALL SCREEN AND ACCESSIBILITY
+   ========================================================= */
+@media (max-width: 480px) {
+  .row { flex-direction: column; align-items: stretch; } 
+  .mascot { flex: none; }
+  .bubble:before { display: none; }                       
+  .grid { gap: 10px; }
+}
+
+
